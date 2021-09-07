@@ -1,17 +1,14 @@
-version: "3.8"
+version: "2.2"
 services:
   FakeDns:
     container_name: FakeDns
-    image: python:3.8
-    working_dir: /opt/FakeDns/
-    command: /opt/FakeDns/fakedns.py -c /opt/FakeDns/dns.conf.example
+    image: fakedns
+    working_dir: /FakeDns/
+    command: python3 /fakedns/fakedns.py -c /fakedns/remote.conf
     volumes:
       - ./:/opt/FakeDns
     ports: 
       - "53:53/udp"
-  FakeDns-test:
-    container_name: FakeDns-test
-    image: fakedns-test:latest
-    build: ./tests
-    depends_on: 
-      - FakeDns
+      - "53:53/tcp"
+      - "953:953/tcp"
+  
